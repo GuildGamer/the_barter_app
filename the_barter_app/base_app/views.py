@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Item
-from django.views.generic import ListView, DetailView, View, CreateView
+from django.views.generic import ListView, DetailView, View, CreateView, TemplateView
 
 #CLASS BASED VIEWS
 class HomeView(ListView):
@@ -11,13 +11,22 @@ context = {
     'items': Item.objects.all()
 }
 
-class ShopGridView(ListView):
-   model = Item
-   template_name = "shop-grid.html"
-
-#FUNCTION BASED VIEWS
 def item_list(request):
     return render(request, "index.html", context)
+
+class ShopGridView(TemplateView):
+    template_name = "shop-grid.html"
+
+class InventoryView(TemplateView):
+    template_name = "inventory.html"
+
+class ContactView(TemplateView):
+    template_name = "contact.html"
+
+#FUNCTION BASED VIEWS
+
+
+
 
 
     
