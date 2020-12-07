@@ -1,2 +1,2 @@
-# the_barter_app
+# toderoh
 A barter trading web app
