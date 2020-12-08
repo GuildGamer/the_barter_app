@@ -18,6 +18,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static_files')
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'base_app',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Accounts'
 ]
 
 MIDDLEWARE = [
