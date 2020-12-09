@@ -86,7 +86,7 @@
 							<ul class="list-main">
 								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
 								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+								<li><i class="ti-power-off"></i><a href="{% url 'login' %}">Login</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -166,7 +166,7 @@
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
 													<li class="active"><a href="{% url 'base_app:item-list' %}">Home</a></li>
-													<li><a href="{% url 'base_app:shop-grid' %}">Shop Grid</a></li>
+													<li><a href="{% url 'base_app:shop-grid' %}">Items Grid</a></li>
 													<li><a href="{% url 'base_app:contact-us' %}">Contact Us</a></li>
 												</ul>
 										</div>
@@ -196,7 +196,7 @@
                     <!-- Single Widget -->
                     <div class="single-footer about">
                         <div class="logo">
-                            <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+							<h4 style="font-family: 'Press Start 2P', cursive; font-color: 'white'"></font>Toderoh</h4>
                         </div>
                         <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
                         <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
@@ -269,7 +269,7 @@
                     </div>
                     <div class="col-lg-6 col-12">
                         <div class="right">
-                            <img src="images/payments.png" alt="#">
+                            <img src="{% static 'images/payments.png' %}" alt="#">
                         </div>
                     </div>
                 </div>
@@ -313,4 +313,4 @@
 <script src="{% static 'js/active.js'%}"></script>
 </body>
 </html>
->>>>>>> main
+
