@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+# TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static_files')
 
 
@@ -28,24 +31,27 @@ SECRET_KEY = '84#rvl1r_0^2j@r=&n47egxv9_czsbx5elcno0qivb16404v*^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+EMAIL_HOST = 'localhost'
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'base_app',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',]
+    'allauth.socialaccount.providers.facebook',
+    'django.contrib.auth',
+    'django.contrib.sites',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'base_app'
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,8 +75,7 @@ ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = '/accounts/email/' # default to /accounts/profile
 
 ACCOUNT_FORMS = {
-'signup': 'demo.forms.CustomSignupForm',
-'login': 'demo.forms.CustomLoginForm',
+'signup': 'the_barter_app.forms.CustomSignupForm',
 }
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -118,7 +123,7 @@ ROOT_URLCONF = 'the_barter_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR,],
+        'DIRS': [os.path.normpath(os.path.join(BASE_DIR, 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
