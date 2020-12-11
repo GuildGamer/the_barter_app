@@ -15,9 +15,9 @@
 	<link rel="icon" type="image/png" href="{% static 'images/favicon.png'%}">
 	<!-- Web Font -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-	
+
 	<!-- StyleSheet -->
-	
+
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
 	<!-- Magnific Popup -->
@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="{% static 'css/owl-carousel.css'%}">
 	<!-- Slicknav -->
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css'%}">
-	
+
 	<!-- Eshop StyleSheet -->
 	<link rel="stylesheet" href="{% static 'css/reset.css'%}">
 	<link rel="stylesheet" href="{% static 'style.css'%}">
@@ -47,11 +47,11 @@
 		@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 	</style>
 
-	
-	
+
+
 </head>
 <body class="js">
-	
+
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="preloader-inner">
@@ -62,8 +62,8 @@
 		</div>
 	</div>
 	<!-- End Preloader -->
-	
-	
+
+
 	<!-- Header -->
 	<header class="header shop">
 		<!-- Topbar -->
@@ -86,7 +86,7 @@
 							<ul class="list-main">
 								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
 								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="{% url 'login' %}">Login</a></li>
+								<li><i class="ti-power-off"></i><a href="/accounts/login">Login</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -101,8 +101,10 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<h3 style="font-family: 'Press Start 2P', cursive;"></font>Toderoh</h3>
-							{% comment %}<a href="index.html"><img src="{% static 'images/logo.png'%}" alt="logo"></a>{% endcomment %}
+              <a class="navbar-brand" href="{% url 'base_app:item-list' %}">
+							   <h3 style="font-family: 'Press Start 2P', cursive;"></font>Toderoh</h3>
+							<!-- <a href="index.html"><img src="{% static 'images/logo.png'%}" alt="logo"></a> -->
+              </a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -162,8 +164,8 @@
 							<div class="menu-area">
 								<!-- Main Menu -->
 								<nav class="navbar navbar-expand-lg">
-									<div class="navbar-collapse">	
-										<div class="nav-inner">	
+									<div class="navbar-collapse">
+										<div class="nav-inner">
 											<ul class="nav main-menu menu navbar-nav">
 													<li class="active"><a href="{% url 'base_app:item-list' %}">Home</a></li>
 													<li><a href="{% url 'base_app:shop-grid' %}">Items Grid</a></li>
@@ -172,7 +174,7 @@
 										</div>
 									</div>
 								</nav>
-								<!--/ End Main Menu -->	
+								<!--/ End Main Menu -->
 							</div>
 						</div>
 					</div>
@@ -183,7 +185,7 @@
 	</header>
 	<!--/ End Header -->
 
-{% block content %} 
+{% block content %}
 {% endblock %}
 
 <!-- Start Footer Area -->
@@ -313,4 +315,3 @@
 <script src="{% static 'js/active.js'%}"></script>
 </body>
 </html>
-
