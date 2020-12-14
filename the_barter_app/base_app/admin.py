@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Item, TradeItem, Inventory
 
-# Register your models here.
+admin.site.register(Item)
+admin.site.register(TradeItem)
+admin.site.register(Inventory)
