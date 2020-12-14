@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %} 
+
+<div class="container" style="background-color: white;  border-radius: 8px; padding-top: 5px; padding-bottom: 5px; opacity: 0.6;">
+	<ul class="messages">
+		<li class="{{ message.tags }}">Showing search results for '{{ searched_item }}'</li>
+		
+	</ul>
+</div>
+
+{% endblock content %}
