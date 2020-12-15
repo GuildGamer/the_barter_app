@@ -84,14 +84,37 @@
 						<!-- Top Right -->
 						<div class="right-content">
               {% if user.is_authenticated %}
+
               <ul class="list-main">
-								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-                <li><i class="ti-power-off"></i><a href="/accounts/logout">Logout</a></li>
+                <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Hi, {{user.first_name}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <i class="ti-user"></i> <a href="#">My account</a>
+                  <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                </div>
+              </li>
+
+
+
               </ul>
               {% else %}
-							<ul>
-								<li><i class="ti-power-off"></i><a href="/accounts/login">Login</a></li>
+							<ul class="list-main">
+                <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
+
+								<li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
+                    <a class="dropdown-item" href="{% url 'account_signup' %}">Create Account</a>
+
+                  </div>
+                </li>
 							</ul>
 						</div>
             {% endif %}
