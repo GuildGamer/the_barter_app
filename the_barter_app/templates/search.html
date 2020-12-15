@@ -3,12 +3,15 @@
 
 {% block content %} 
 {% if items %}
-
-<div class="container" style="background-color: white;  border-radius: 8px; padding-top: 5px; padding-bottom: 5px; opacity: 0.6;">
+<div class="topbar">
+    <div class="container">
+<div class="container" style="background-color: grey;  border-radius: 8px; padding-top: 5px; padding-bottom: 5px; opacity: 0.6;">
 	<ul class="messages">
-		<li class="{{ message.tags }}">Showing search results for '{{ searched_item }}'</li>
+		<li class="{{ message.tags }}" style="color: white;">Showing search results for '{{ searched_item }}'</li>
 		
-	</ul>
+    </ul>
+    </div>
+</div>
 </div>
 
 <div class="product-area section">
@@ -56,11 +59,30 @@
 </div>
 
 {% else %}
-<div class="middle-inner">
+
+<div class="topbar">
+<div class="container">
+<div class="container" style="background-color: grey;  border-radius: 8px; padding-top: 5px; padding-bottom: 5px; opacity: 0.6;">
+	<ul class="messages">
+		<li class="{{ message.tags }}" style="color: white;">Sorry, there are no search results for '{{ searched_item }}'</li>
+		
+	</ul>
+</div>
+</div>
+</div>
+
+
+<div class="product-area section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-2 col-md-2 col-12">
-                <h1 style="font-family: 'Press Start 2P', cursive;"></font>OOPS!</h1>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="man" role="tabpanel">
+                <div class="tab-single">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12">
+                <h1 style="font-family: 'Press Start 2P', cursive; color: grey;"></font>OOPS!</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
