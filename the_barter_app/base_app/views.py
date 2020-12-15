@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Item
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView, View, CreateView, TemplateView
+from django.db.models import Q
+from django.contrib import messages
+from django.shortcuts import redirect
 
 #CLASS BASED VIEWS
 class HomeView(ListView):
