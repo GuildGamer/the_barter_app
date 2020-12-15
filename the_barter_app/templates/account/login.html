@@ -29,8 +29,7 @@
     </div>
     {% endif %}
   {% endblock %}
-
-<h3 class="h3" id="head_banner">{% trans "Sign In" %}</h3>
+<h3 class="btn" id="head_banner">{% trans "Sign In" %}</h3>
 
 <form class="container-fluid text-center" id="login_form" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}

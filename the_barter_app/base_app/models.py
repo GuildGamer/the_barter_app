@@ -2,23 +2,29 @@ from django.db import models
 from django.conf import settings
 
 CATEGORY_CHOICES = (
-    ('MF', 'Men\'s Fashion'),
-    ('WF', 'Women\'s Fashion'),
-    ('CJ', 'Clothing and Jewelry'),
-    ('FO', 'Food'),
-    ('WD', 'Web & Mobile Development'),
-    ('ED', 'Electronics and Devices'),
-    ('AS', 'Art and Stationary')
+    ('CL', 'Clothing'),
+    ('ED', 'Electronics & Devices'),
+    ('KD', 'Kids'),
+    ('FI', 'Food Items'),
+    ('KI', 'Kitchen'),
+    ('FH', 'Furniture & Housing'),
 )
 
+CONDITION_CHOICES = (
+    ('N', 'New'),
+    ('U', 'Used'),
+)
+
+
 class Item(models.Model):
-    title = models.CharField(max_length=200, blank=True, null=True)
+    title = models.CharField(max_length=100)
     estimated_value = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2, blank=True, null=True)
-    slug = models.SlugField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True)
-    image_1 = models.ImageField(blank=True, null=True)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
+    slug = models.SlugField()
+    description = models.TextField(max_length=400)
+    condition = models.CharField(choices=CONDITION_CHOICES, max_length=1)
+    image = models.ImageField()
+    image_1 = models.ImageField()
     image_2 = models.ImageField(blank=True, null=True)
     image_3 = models.ImageField(blank=True, null=True)
 
