@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
-{% block head_links %} 
+{% block head_links %}
 
 <title>Signup</title>
 
@@ -28,7 +28,7 @@
     </div>
     {% endif %}
   {% endblock %}
-  
+
 
 <h3 class="h3" id="head_banner">{% trans "Sign Up" %}</h3>
 
@@ -42,9 +42,9 @@
   {% if redirect_field_value %}
 
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  
+
   {% endif %}
-  
+
   <button class="btn btn-outline-primary btn-lg" type="submit">{% trans "Sign Up" %}</button>
 </form>
 
