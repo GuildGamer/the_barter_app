@@ -15,7 +15,6 @@ CONDITION_CHOICES = (
     ('U', 'Used'),
 )
 
-
 class Item(models.Model):
     title = models.CharField(max_length=100)
     estimated_value = models.FloatField(blank=True, null=True)
@@ -27,15 +26,24 @@ class Item(models.Model):
     image_1 = models.ImageField()
     image_2 = models.ImageField(blank=True, null=True)
     image_3 = models.ImageField(blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  blank=True, null=True)
 
     def __str__(self):
         return self.title
 
 class TradeItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
+    request_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    response_date = models.DateTimeField(blank=True, null=True)
+    accepted = models.BooleanField(default=False, blank=True, null=True)
 
-    pass
+
+    def __str__(self):
+        return self.title
+
 class Inventory(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):

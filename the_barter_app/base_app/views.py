@@ -18,7 +18,8 @@ context = {
 def item_list(request):
     return render(request, "index.html", context)
 
-class ShopGridView(TemplateView):
+class ShopGridView(ListView):
+    model = Item
     template_name = "shop-grid.html"
 
 class InventoryView(TemplateView):
