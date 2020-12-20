@@ -56,7 +56,9 @@ def searchResult(request):
     else:
         messages.error(request, "Sorry there are no search results")
         return render(request, "search.html", {})
+        
 #new item view
+@login_required
 def new_item(request):
 
     if request.method == 'POST':
