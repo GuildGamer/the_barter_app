@@ -3,8 +3,106 @@
 {% load static %}
 
 {% block content %} 
-
 {% csrf_token %}
-{{ i_form }}
+
+<div class="shopping-cart section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+<form method="POST">
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Item Title <span>*</span></label>
+                {{ i_form.title }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Estimated Value</label>
+                {{ i_form.estimated_value }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Item Category <span>*</span></label>
+                {{ i_form.category }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Item Condition <span>*</span></label>
+                {{ i_form.condition }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Item Description <span>*</span></label>
+                {{ i_form.description }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Image 1<span>*</span></label>
+                {{ i_form.image }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Image 2<span>*</span></label>
+                {{ i_form.image_1 }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Image 3</label>
+                {{ i_form.image_2 }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="form-group">
+                <label>Image 4</label>
+                {{ i_form.image_3 }}
+            </div>
+        </div>
+    </div>
+
+
+<div class="col-12">
+    <div class="form-group button">
+        <button type="submit" class="btn ">Create Item</button>
+    </div>
+</div>
+</form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
