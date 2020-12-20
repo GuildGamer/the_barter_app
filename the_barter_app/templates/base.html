@@ -180,7 +180,9 @@
 								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar shopping">
-								<a href="{% url 'base_app:inventory' %}" class="single-icon"><img src="{% static 'images/treasure.png'%}" width="40" height="40" alt="inventory"><span class="total-count">2</span></a>
+								{% if user.is_authenticated %}
+								<a href="{% url 'base_app:inventory' %}" class="single-icon"><img src="{% static 'images/treasure.png'%}" width="40" height="40" alt="inventory"></a>
+								{% endif %}
 							</div>
 						</div>
 					</div>

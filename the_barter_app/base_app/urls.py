@@ -5,6 +5,7 @@ from .views import (
     InventoryView,
     ContactView,
     searchResult,
+    new_item
     )
 
 app_name = 'base_app'
@@ -15,4 +16,6 @@ urlpatterns = [
      path('my-inventory/', InventoryView.as_view(), name='inventory'),
      path('contact-us/', ContactView.as_view(), name='contact-us'),
      path('search-results/', searchResult, name='search-results'),
+     path('new-item/', new_item, name='new-item'),
+     
 ]

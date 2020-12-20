@@ -26,13 +26,18 @@ class Item(models.Model):
     image_1 = models.ImageField()
     image_2 = models.ImageField(blank=True, null=True)
     image_3 = models.ImageField(blank=True, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  blank=True, null=True)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return self.title
-
+    def set_sortBy_Date_Uploaded(self):
+        Item.objects.order_by('date_uploaded')
+    def set_sortBy_Item_Condition(self):
+        Item.objects.order_by('condition')
 class TradeItem(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
     request_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     response_date = models.DateTimeField(blank=True, null=True)
@@ -43,7 +48,7 @@ class TradeItem(models.Model):
         return self.title
 
 class Inventory(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):

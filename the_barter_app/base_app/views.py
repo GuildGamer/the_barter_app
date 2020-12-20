@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Item
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View, CreateView, TemplateView
 from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect
+from .forms import*
 
 #CLASS BASED VIEWS
 class HomeView(ListView):
@@ -22,7 +25,13 @@ class ShopGridView(ListView):
     model = Item
     template_name = "shop-grid.html"
 
-class InventoryView(TemplateView):
+    def set_sortBy_date_uploaded():
+        pass
+    def set_sortBy_Item_Condition():
+        pass
+
+class InventoryView(ListView):
+    model = Item
     template_name = "inventory.html"
 
 class ContactView(TemplateView):
@@ -47,7 +56,28 @@ def searchResult(request):
     else:
         messages.error(request, "Sorry there are no search results")
         return render(request, "search.html", {})
+#new item view
+def new_item(request):
 
+    if request.method == 'POST':
+
+        item_form = NewItemForm(data=request.POST)
+
+        if item_form.is_valid():
+
+            item = item_form.save()
+            item.save()
+
+        else:
+            messages.error(request, item_form.errors)
+
+    else:
+        item_form = NewItemForm()
+    context = {
+            'i_form': item_form
+    }
+
+    return render(request, "new-item.html", context)
 
 
 

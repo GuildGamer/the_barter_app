@@ -119,9 +119,8 @@
 										<div class="single-shorter">
 											<label>Sort By :</label>
 											<select>
-												<option selected="selected">Name</option>
-												<option>Item Condition</option>
-												<option>Date Uploaded</option>
+												<option href="{{item.set_sortBy_Item_Condition}}">Item Condition</option>
+												<option href="{{item.set_sortBy_Date_Uploaded}}">Date Uploaded</option>
 											</select>
 										</div>
 									</div>
@@ -133,8 +132,8 @@
 								<!--/ End Shop Top -->
 							</div>
 						</div>
-						{% for item in object_list %}
 						<div class="row">
+							{% for item in object_list %}
 							<div class="col-lg-4 col-md-6 col-12">
 								<div class="single-product">
 									<div class="product-img">
@@ -156,13 +155,13 @@
 									<div class="product-content">
 										<h3><a href="product-details.html">{{item.title }}</a></h3>
 										<div class="product-price">
-											<span>${{ item.price }}</span>
+											<span>${{ item.estimated_value }}</span>
 										</div>
 									</div>
 								</div>
 							</div>
+							{% endfor %}
 						</div>
-						{% endfor %}
 					</div>
 				</div>
 			</div>
