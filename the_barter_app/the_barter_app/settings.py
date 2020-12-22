@@ -119,6 +119,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
+
 ROOT_URLCONF = 'the_barter_app.urls'
 
 TEMPLATES = [

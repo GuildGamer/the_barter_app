@@ -1,10 +1,16 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Item
+from .models import Item, Profile
+from the_barter_app.forms import UserForm, ProfileForm
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView, View, CreateView, TemplateView
 from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.utils.translation import gettext as _
+
+
 
 #CLASS BASED VIEWS
 class HomeView(ListView):
@@ -49,6 +55,39 @@ def searchResult(request):
 
 
 
+##################################################################################################################################
+import allauth.app_settings
+
+# class profileView(TemplateView):
+#     model = Profile
+#     template_name = 'Profile.html'
 
 
-    
+@login_required
+@transaction.atomic
+def profileView(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Your profile was successfully updated!'))
+            return redirect('settings:profile')
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'Profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+# def update_profile(request, user_id):
+#     user = User.objects.get(pk=user_id)
+#     user.profile.address = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
+#     user.save()
+# def update_profile(request, user_id):
+#     user = allauth.app_settings.USER_MODEL.objects.get(pk=user_id)
+#     user.profile.address = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
+#     user.save()
