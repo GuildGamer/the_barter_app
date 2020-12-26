@@ -64,6 +64,7 @@ def new_item(request):
     if request.method == 'POST':
 
         item_form = NewItemForm(data=request.POST)
+        #item_form.user = Item.user
 
         if item_form.is_valid():
 
