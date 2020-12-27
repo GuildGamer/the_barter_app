@@ -21,6 +21,10 @@ context = {
 def item_list(request):
     return render(request, "index.html", context)
 
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = "product.html"
+
 class ShopGridView(ListView):
     model = Item
     template_name = "shop-grid.html"

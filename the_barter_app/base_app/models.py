@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.shortcuts import reverse
 
 CATEGORY_CHOICES = (
     ('CL', 'Clothing'),
@@ -36,6 +37,8 @@ class Item(models.Model):
         Item.objects.order_by('date_uploaded')
     def set_sortBy_Item_Condition(self):
         Item.objects.order_by('condition')
+    def get_absolute_url(self):
+        return reverse('base_app:item-details', kwargs={'slug': self.slug})
 class TradeItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
