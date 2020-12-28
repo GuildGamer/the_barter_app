@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
 
 
 
@@ -56,33 +57,42 @@ def searchResult(request):
 
 
 ##################################################################################################################################
-import allauth.app_settings
+# import allauth.app_settings
 
-# class profileView(TemplateView):
-#     model = Profile
-#     template_name = 'Profile.html'
+def ProfileDetail(request):
+    profile = Profile.objects.get()
+    return render(request, 'Profile.html', {'profile': profile})
 
 
 @login_required
-@transaction.atomic
-def profileView(request):
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('settings:profile')
+# @transaction.atomic
+def EditProfile(request):
+    user = User.objects.get(pk=pk)
+    form = UserForm(instance=user)
+
+    if request.user.is_authenticated and request.user.id == user.id:
+
+        if request.method == 'POST':
+            # Profile = Profile.objects.get(slug=slug)
+            profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, _('Your profile was successfully updated!'))
+                return redirect('ProfileDetail')
+            else:
+                messages.error(request, _('Please correct the error below.'))
+
         else:
-            messages.error(request, _('Please correct the error below.'))
+            # user_form = UserForm(instance=request.user)
+            profile_form = ProfileForm(instance=request.user.profile)
+
     else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'Profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
+        raise PermissionDenied
+
+    return render(request, 'EditProfile.html', {'profile_form': profile_form})
+
+
 # def update_profile(request, user_id):
 #     user = User.objects.get(pk=user_id)
 #     user.profile.address = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
