@@ -73,7 +73,7 @@ def profileView(request):
             user_form.save()
             profile_form.save()
             messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('settings:profile')
+            return redirect('base_app:profile')
         else:
             messages.error(request, _('Please correct the error below.'))
     else:
