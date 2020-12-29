@@ -1,6 +1,12 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
+import allauth.app_settings
+from allauth.utils import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+
 
 CATEGORY_CHOICES = (
     ('CL', 'Clothing'),
@@ -15,6 +21,7 @@ CONDITION_CHOICES = (
     ('N', 'New'),
     ('U', 'Used'),
 )
+
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
@@ -56,3 +63,46 @@ class Inventory(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+#######################################################################################################################
+GENDERS =(('M', 'MALE'),
+            ('F', 'FEMALE'))
+#
+# # User = allauth.app_settings.USER_MODEL
+# class Profile(models.Model):
+#     user = models.ForeignKey(allauth.app_settings.USER_MODEL, on_delete=models.CASCADE)
+#     address = models.CharField(max_length=30, blank=True)
+#     birth_date = models.DateField(null=True, blank=True)
+#     gender = models.CharField(max_length=1, choices=GENDERS)
+#
+# # def __str__(self):
+# #     return self.user.first_name
+#
+#
+# @receiver(post_save, sender=allauth.app_settings.USER_MODEL)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
+#
+# @receiver(post_save, sender=allauth.app_settings.USER_MODEL)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
+
+
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=15, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    gender = models.CharField(choices=GENDERS, max_length=20, blank=True) #, input_formats=settings.DATE_INPUT_FORMATS)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
