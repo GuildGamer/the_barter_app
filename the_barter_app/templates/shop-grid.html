@@ -137,7 +137,7 @@
 							<div class="col-lg-4 col-md-6 col-12">
 								<div class="single-product">
 									<div class="product-img">
-										<a href="product-details.html">
+										<a href="{{ item.get_absolute_url }}">
 											<img class="default-img" src="{{ item.image.url }}" alt="#">
 											<img class="hover-img" src="{{ item.image.url }}" alt="#">
 										</a>
@@ -153,7 +153,7 @@
 										</div>
 									</div>
 									<div class="product-content">
-										<h3><a href="product-details.html">{{item.title }}</a></h3>
+										<h3><a href="{{ item.get_absolute_url }}">{{item.title }}</a></h3>
 										<div class="product-price">
 											<span>${{ item.estimated_value }}</span>
 										</div>
