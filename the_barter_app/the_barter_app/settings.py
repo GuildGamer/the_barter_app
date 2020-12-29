@@ -119,6 +119,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
+
 ROOT_URLCONF = 'the_barter_app.urls'
 
 TEMPLATES = [
@@ -195,3 +197,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+
+###########################################################################################################################
+
+DATE_INPUT_FORMATS = ['%Y-%m-%d','%m/%d/%Y','%m/%d/%y']
