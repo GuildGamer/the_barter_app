@@ -7,6 +7,23 @@
 {% load i18n %}
 {% block head_title %}{% trans "Profile" %} {% endblock %}
 
+{% block messages %}
+   {% if messages %}
+   <div>
+       <ul>
+       {% for message in messages %}
+       <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>{{message}}</strong>
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+       </div>
+       {% endfor %}
+       </ul>
+   </div>
+   {% endif %}
+ {% endblock %}
+
 {% block content %}
 
 <h2>{{ user.get_full_name }}</h2>

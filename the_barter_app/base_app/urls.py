@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf.urls import url
+
 from .views import (
     HomeView,
     ShopGridView,
@@ -6,7 +8,7 @@ from .views import (
     ContactView,
     searchResult,
     profileView
-    )
+)
 
 app_name = 'base_app'
 
@@ -17,4 +19,6 @@ urlpatterns = [
      path('my-inventory/', InventoryView.as_view(), name='inventory'),
      path('contact-us/', ContactView.as_view(), name='contact-us'),
      path('search-results/', searchResult, name='search-results'),
+     # url(r'^Profile/(?P<slug>[-\w]+)/$', ProfileDetail, name='ProfileDetail'),
+     # url(r'^Profile/(?P<slug>[-\w]+)/edit/$', EditProfile, name='EditProfile'),
 ]

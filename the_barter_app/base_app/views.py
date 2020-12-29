@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
 
 
 
@@ -56,11 +57,11 @@ def searchResult(request):
 
 
 ##################################################################################################################################
-import allauth.app_settings
+# import allauth.app_settings
 
-# class profileView(TemplateView):
-#     model = Profile
-#     template_name = 'Profile.html'
+# def ProfileDetail(request):
+#     profile = Profile.objects.get()
+#     return render(request, 'Profile.html', {'profile': profile})
 
 
 @login_required
@@ -83,6 +84,8 @@ def profileView(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
 # def update_profile(request, user_id):
 #     user = User.objects.get(pk=user_id)
 #     user.profile.address = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'

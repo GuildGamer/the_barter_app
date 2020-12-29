@@ -49,8 +49,8 @@ class Inventory(models.Model):
 
 
 #######################################################################################################################
-# GENDERS =(('M', 'MALE'),
-#             ('F', 'FEMALE'))
+GENDERS =(('M', 'MALE'),
+            ('F', 'FEMALE'))
 #
 # # User = allauth.app_settings.USER_MODEL
 # class Profile(models.Model):
@@ -77,9 +77,9 @@ class Inventory(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateField(null=True, blank=True) #input_formats=['%Y-%m-%d','%m/%d/%Y','%m/%d/%y'])
+    phone = models.CharField(max_length=15, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    gender = models.CharField(choices=GENDERS, max_length=20, blank=True) #, input_formats=settings.DATE_INPUT_FORMATS)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
