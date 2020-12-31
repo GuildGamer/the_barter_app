@@ -93,7 +93,7 @@
                   Hi, {{user.first_name}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <i class="ti-user"></i> <a href="#">My account</a>
+                  <i class="ti-user"></i> <a href="{% url 'base_app:profile' %}">My account</a>
                   <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
                 </div>
               </li>
@@ -142,7 +142,8 @@
 							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
-								<form class="search-form">
+								<form class="search-form" action="{% url 'base_app:search-results' %}" method="get">
+									{% csrf_token %}
 									<input type="text" placeholder="Search here..." name="search">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
 								</form>
@@ -157,11 +158,12 @@
 							<div class="search-bar">
 								<select>
 									<option selected="selected">All Category</option>
-									<option>watch</option>
+									<option>Clothing</a></option>
 									<option>mobile</option>
 									<option>kid’s item</option>
 								</select>
-								<form>
+								<form action="{% url 'base_app:search-results' %}" method="get">
+									{% csrf_token %}
 									<input name="search" placeholder="Search Products Here....." type="search">
 									<button class="btnn"><i class="ti-search"></i></button>
 								</form>
@@ -174,11 +176,13 @@
 							<div class="sinlge-bar">
 								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
+							{% if user.is_authenticated %}
 							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+								<a href="{% url 'base_app:profile' %}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar shopping">
-								<a href="{% url 'base_app:inventory' %}" class="single-icon"><img src="{% static 'images/treasure.png'%}" width="40" height="40" alt="inventory"><span class="total-count">2</span></a>
+								<a href="{% url 'base_app:inventory' %}" class="single-icon"><img src="{% static 'images/treasure.png'%}" width="40" height="40" alt="inventory"></a>
+							{% endif %}
 							</div>
 						</div>
 					</div>
@@ -214,6 +218,23 @@
 		<!--/ End Header Inner -->
 	</header>
 	<!--/ End Header -->
+
+	{% block messages %}
+   {% if messages %}
+   <div>
+       <ul>
+       {% for message in messages %}
+       <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>{{message}}</strong>
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+       </div>
+       {% endfor %}
+       </ul>
+   </div>
+   {% endif %}
+ {% endblock %}
 
 {% block content %}
 {% endblock %}
