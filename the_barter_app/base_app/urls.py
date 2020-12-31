@@ -8,7 +8,7 @@ from .views import (
     ContactView,
     searchResult,
     new_item,
-    ItemDetailView
+    ItemDetailView,
     profileView
 )
 

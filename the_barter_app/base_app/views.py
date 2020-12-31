@@ -76,14 +76,16 @@ def new_item(request):
 
     if request.method == 'POST':
 
-        item_form = NewItemForm(data=request.POST)
+        item_form = NewItemForm(request.POST, request.FILES)
         #item_form.user = Item.user
 
         if item_form.is_valid():
 
-            item = item_form.save()
+            item = item_form.save(commit=False)
+            item.user = request.user
             item.save()
-
+            messages.success(request, _('You have sucessfully added a new Item to your inventory'))
+            return redirect('base_app:inventory')
         else:
             messages.error(request, item_form.errors)
 
@@ -94,8 +96,6 @@ def new_item(request):
     }
 
     return render(request, "new-item.html", context)
-
-
 
 
 ##################################################################################################################################
