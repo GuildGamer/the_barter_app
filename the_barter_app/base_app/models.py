@@ -77,9 +77,13 @@ GENDERS =(('M', 'MALE'),
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=15, blank=True)
-    address = models.CharField(max_length=200, blank=True)
     gender = models.CharField(choices=GENDERS, max_length=20, blank=True) #, input_formats=settings.DATE_INPUT_FORMATS)
+    phone_1 = models.CharField(max_length=15, blank=True)
+    phone_2 = models.CharField(max_length=15, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    city = models.CharField(blank=True, max_length=100)
+    state = models.CharField(blank=True, max_length=100)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
