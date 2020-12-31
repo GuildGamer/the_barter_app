@@ -97,7 +97,7 @@ def new_item(request):
 
     return render(request, "new-item.html", context)
 
-
+#for a 100 contributions in 2020!
 ##################################################################################################################################
 # import allauth.app_settings
 

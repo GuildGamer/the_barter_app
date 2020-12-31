@@ -23,9 +23,9 @@
 							{% for item in object_list %}
 							{% if item.user.id == user.id %}
 							<tr>
-								<td class="image" data-title="No"><img src="{{ item.image.url }}" alt="#"></td>
-								<td class="product-des" data-title="Description">
-									<p class="product-name"><a href="#">{{ item.title }}</a></p>
+								<td class="image" data-title="Item"><img src="{{ item.image.url }}" alt="#"></td>
+								<td class="product-des" data-title="Name">
+									<p class="product-name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></p>
 								</td>
 								<td class="qty" data-title="Qty"><!-- Input Order -->
 									<div class="input-group">
