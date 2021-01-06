@@ -195,5 +195,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 DATE_INPUT_FORMATS = ['%Y-%m-%d','%m/%d/%Y','%m/%d/%y']
 
-
 ASGI_APPLICATION = 'the_barter_app.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+
