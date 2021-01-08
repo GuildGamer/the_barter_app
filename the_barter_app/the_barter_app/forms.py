@@ -1,6 +1,8 @@
 from allauth.account.forms import SignupForm, LoginForm
 from django import forms
 from base_app.models import Profile
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 from django.contrib.auth.models import User
 
 class CustomSignupForm(SignupForm):
@@ -20,4 +22,9 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('phone', 'address', 'gender')
+        fields = ('phone_1', 'phone_2', 'address', 'city', 'state', 'gender')
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-group'

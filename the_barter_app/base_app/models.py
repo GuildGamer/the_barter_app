@@ -36,7 +36,7 @@ class Item(models.Model):
     image_3 = models.ImageField(blank=True, null=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    
+
 
     def __str__(self):
         return self.title
@@ -68,28 +68,6 @@ class Inventory(models.Model):
 #######################################################################################################################
 GENDERS =(('M', 'MALE'),
             ('F', 'FEMALE'))
-#
-# # User = allauth.app_settings.USER_MODEL
-# class Profile(models.Model):
-#     user = models.ForeignKey(allauth.app_settings.USER_MODEL, on_delete=models.CASCADE)
-#     address = models.CharField(max_length=30, blank=True)
-#     birth_date = models.DateField(null=True, blank=True)
-#     gender = models.CharField(max_length=1, choices=GENDERS)
-#
-# # def __str__(self):
-# #     return self.user.first_name
-#
-#
-# @receiver(post_save, sender=allauth.app_settings.USER_MODEL)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-# @receiver(post_save, sender=allauth.app_settings.USER_MODEL)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
-
-
 
 
 class Profile(models.Model):
@@ -97,7 +75,12 @@ class Profile(models.Model):
     phone = models.CharField(max_length=15, blank=True)
     address = models.CharField(max_length=200, blank=True)
     gender = models.CharField(choices=GENDERS, max_length=20, blank=True) #, input_formats=settings.DATE_INPUT_FORMATS)
-
+    phone_1 = models.CharField(max_length=15, blank=True)
+    phone_2 = models.CharField(max_length=15, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    city = models.CharField(blank=True, max_length=100)
+    state = models.CharField(blank=True, max_length=100)
+    
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
