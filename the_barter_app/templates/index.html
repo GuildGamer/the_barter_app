@@ -72,6 +72,13 @@
 														<a href="{{ item.get_absolute_url }}">
 															<img class="default-img" src="{{ item.image.url }}" alt="#">
 															<img class="hover-img" src="{{ item.image.url }}" alt="#">
+
+															{% if item.condition == "N" %}
+														<span class="out-of-stock">{{item.get_condition_display}}</span>
+														{% endif %}
+														{% if item.condition == "U" %}
+														<span class="out-of-stock" style="background-color: #371bedc6;">{{item.get_condition_display}}</span>
+														{% endif %}
 														</a>
 														<div class="button-head">
 															<div class="product-action">
