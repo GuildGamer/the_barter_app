@@ -30,3 +30,6 @@ class ProfileForm(forms.ModelForm):
             visible.field.widget.attrs['class'] = 'form-group'
 
             
+
+
+
