@@ -98,7 +98,7 @@ def new_item(request):
     return render(request, "new-item.html", context)
 
 @login_required
-def remove_from_cart(request, slug):
+def delete_item(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(
         user = request.user

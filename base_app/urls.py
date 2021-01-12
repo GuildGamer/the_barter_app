@@ -9,7 +9,8 @@ from .views import (
     searchResult,
     new_item,
     ItemDetailView,
-    profileView
+    profileView,
+    delete_item,
 )
 
 app_name = 'base_app'
@@ -23,6 +24,7 @@ urlpatterns = [
      path('search-results/', searchResult, name='search-results'),
      path('item-details/<slug>', ItemDetailView.as_view(), name='item-details'),
      path('new-item/', new_item, name='new-item'),
+     path('delete-item/<slug>/',delete_item, name='delete-item'),
      # url(r'^Profile/(?P<slug>[-\w]+)/$', ProfileDetail, name='ProfileDetail'),
      # url(r'^Profile/(?P<slug>[-\w]+)/edit/$', EditProfile, name='EditProfile'),
 ]
