@@ -2,3 +2,5 @@ steveenv
 *.sqlite3
 
 barterenv
+__pycache__
+.pyc
