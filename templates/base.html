@@ -46,7 +46,6 @@
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 	</style>
-	<a href="https://icons8.com/icon/4NGrLmrYVI4E/chat"></a>
 
 
 
@@ -71,6 +70,16 @@
 		<div class="topbar">
 			<div class="container">
 				<div class="row">
+					<div class="col-lg-4 col-md-12 col-12">
+						<!-- Top Left -->
+						<div class="top-left">
+							<ul class="list-main">
+								<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
+								<li><i class="ti-email"></i> support@shophub.com</li>
+							</ul>
+						</div>
+						<!--/ End Top Left -->
+					</div>
 					<div class="col-lg-8 col-md-12 col-12">
 						<!-- Top Right -->
 						<div class="right-content">
@@ -164,22 +173,17 @@
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
-							{% comment %}
 							<div class="sinlge-bar">
 								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
-							{% endcomment %}
 							{% if user.is_authenticated %}
 							<div class="sinlge-bar">
 								<a href="{% url 'base_app:profile' %}" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar shopping">
 								<a href="{% url 'base_app:inventory' %}" class="single-icon"><img src="{% static 'images/treasure.png'%}" width="40" height="40" alt="inventory"></a>
-							</div>
-							<div class="sinlge-bar">
-								<a href="{% url 'chat:index' %}" class="single-icon"><img src="{% static 'images/chat.png'%}" width="40" height="40" alt="negotiate" /></a>
-							</div>
 							{% endif %}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -274,6 +278,7 @@
                             <li><a href="#">Payment Methods</a></li>
                             <li><a href="#">Money-back</a></li>
                             <li><a href="#">Returns</a></li>
+                            <li><a href="#">Shipping</a></li>
                             <li><a href="#">Privacy Policy</a></li>
                         </ul>
                     </div>
@@ -282,10 +287,12 @@
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Single Widget -->
                     <div class="single-footer social">
-                        <h4>Get In Touch</h4>
+                        <h4>Get In Tuch</h4>
                         <!-- Single Widget -->
                         <div class="contact">
                             <ul>
+                                <li>NO. 342 - London Oxford Street.</li>
+                                <li>012 United Kingdom.</li>
                                 <li>info@eshop.com</li>
                                 <li>+032 3456 7890</li>
                             </ul>
@@ -304,6 +311,24 @@
         </div>
     </div>
     <!-- End Footer Top -->
+    <div class="copyright">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <div class="left">
+                            <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="right">
+                            <img src="{% static 'images/payments.png' %}" alt="#">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
 <!-- /End Footer Area -->
 
