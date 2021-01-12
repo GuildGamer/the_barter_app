@@ -100,25 +100,12 @@ def new_item(request):
 @login_required
 def delete_item(request, slug):
     item = get_object_or_404(Item, slug=slug)
-    order_qs = Order.objects.filter(
-        user = request.user
-    )
-
-    if order_qs.exists():
-        order = order_qs[0]
-
-        if order.items.filter(item__slug = item.slug).exists():
-            item = Item.objects.filter(
-                item=item,
-                user = request.user,
-            )[0]
-            order.items.remove(item)
-            messages.info(request, "This item was deleted")
-            return redirect("base_app:product", slug=slug)        
-    else:
-        messages.info(request, "You do not have an active order")
-        return redirect("base_app:product", slug=slug)
-
+    
+    if item.user == request.user:   
+        item.delete()
+        messages.info(request, "This item was deleted")
+        return redirect("base_app:inventory")
+   
 #for a 100 contributions in 2020!
 ##################################################################################################################################
 # import allauth.app_settings
