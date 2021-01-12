@@ -36,7 +36,7 @@ class Item(models.Model):
     image_3 = models.ImageField(blank=True, null=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
+   
 
     def __str__(self):
         return self.title

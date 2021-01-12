@@ -45,7 +45,7 @@
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
                 'message': message,
-                'command': 'new_message'
+                'command':'new_message'
             }));
             messageInputDom.value = '';
         };
