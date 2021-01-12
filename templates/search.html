@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %} 
+{% if items %}
+
+<div class="topbar">
+    <div class="container">
+<div class="container" style="background-color: grey;  border-radius: 8px; padding-top: 5px; padding-bottom: 5px; opacity: 0.6;">
+	<ul class="messages">
+		<li class="{{ message.tags }}" style="color: white;">Showing search results for '{{ searched_item }}'</li>
+		
+    </ul>
+    </div>
+</div>
+
+<div class="product-area section">
+    <div class="container">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="man" role="tabpanel">
+                <div class="tab-single">
+                    <div class="row">
+{% for item in items %}
+
+<div class="col-xl-3 col-lg-4 col-md-4 col-12">
+    <div class="single-product">
+        <div class="product-img">
+            <a href="{{item.get_absolute_url}}">
+                <img class="default-img" src="{{ item.image.url }}" alt="#">
+                <img class="hover-img" src="{{ item.image.url }}" alt="#">
+            </a>
+            <div class="button-head">
+                <div class="product-action">
+                    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                    <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                    <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                </div>
+                <div class="product-action-2">
+                    <a title="Add to cart" href="#">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="product-content">
+            <h3><a href="{{item.get_absolute_url}}">{{item.title}}</a></h3>
+            <div class="product-price">
+                <span>EV: ${{item.estimated_value}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+<div class="topbar">
+<div class="container">
+<div class="container" style="background-color: grey;  border-radius: 8px; padding-top: 5px; padding-bottom: 5px; opacity: 0.6;">
+	<ul class="messages">
+		<li class="{{ message.tags }}" style="color: white;">Sorry, there are no search results for '{{ searched_item }}'</li>
+		
+	</ul>
+</div>
+</div>
+</div>
+
+
+<div class="product-area section">
+    <div class="container">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="man" role="tabpanel">
+                <div class="tab-single">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-12" style="margin: auto; width: 50%;">
+                <h1 style="font-family: 'Press Start 2P', cursive; color: rgb(220, 215, 215);"></font>OOPS!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}
