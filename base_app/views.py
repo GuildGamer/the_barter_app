@@ -38,10 +38,7 @@ class ShopGridView(ListView):
     model = Item
     template_name = "shop-grid.html"
 
-    def set_sortBy_date_uploaded():
-        pass
-    def set_sortBy_Item_Condition():
-        pass
+    
 
 class InventoryView(ListView):
     model = Item

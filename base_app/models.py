@@ -40,10 +40,10 @@ class Item(models.Model):
 
     def __str__(self):
         return self.title
-    def set_sortBy_Date_Uploaded(self):
-        Item.objects.order_by('date_uploaded')
-    def set_sortBy_Item_Condition(self):
-        Item.objects.order_by('condition')
+    def set_sort_by_condition(self):
+        return Item.objects.order_by('condition').all()
+    def set_sort_by_date(self):
+        return Item.objects.order_by('-date_uploaded').all()
     def get_absolute_url(self):
         return reverse('base_app:item-details', kwargs={'slug': self.slug})
 class TradeItem(models.Model):

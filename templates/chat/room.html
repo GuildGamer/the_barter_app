@@ -1,54 +1,468 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
+		<meta charset="utf-8">
+		<title>Toredoh - Barter App.</title>
+		<meta name="description" content="#">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap core CSS -->
+		<link href="{% static 'css/lib/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+		<!-- Swipe core CSS -->
+		<link href="{% static 'css/swipe.min.css' %}" type="text/css" rel="stylesheet">
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="{% static 'images/favicon.png'%}">
 </head>
 <body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+    {% comment %}<textarea id="chat-log" cols="100" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-
+    <input id="chat-message-submit" type="button" value="Send">{% endcomment %}
     <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+<main>
+    <div class="layout">
+        <!-- Start of Navigation -->
+        <div class="navigation">
+            <div class="container">
+                <div class="inside">
+                    <div class="nav nav-tab menu">
+                        <button class="btn"><img class="avatar-xl" src="{% static 'img/avatars/avatar-male-1.jpg' %}" alt="avatar"></button>
+                        <a href="#members" data-toggle="tab"><i class="material-icons">account_circle</i></a>
+                        <a href="#notifications" data-toggle="tab" class="f-grow1"><i class="material-icons">notifications_none</i></a>
+                        <button class="btn power" onclick="visitPage();"><i class="material-icons">power_settings_new</i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Navigation -->
+        <!-- Start of Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <!-- Start of Contacts -->
+                        <div class="tab-pane fade" id="members">
+                            <div class="search">
+                                <form class="form-inline position-relative">
+                                    <input type="search" class="form-control" id="people" placeholder="Search for people...">
+                                    <button type="button" class="btn btn-link loop"><i class="material-icons">search</i></button>
+                                </form>
+                            </div>
+                            <div class="list-group sort">
+                                <button class="btn filterMembersBtn active show" data-toggle="list" data-filter="all">All</button>
+                                <button class="btn filterMembersBtn" data-toggle="list" data-filter="online">Online</button>
+                                <button class="btn filterMembersBtn" data-toggle="list" data-filter="offline">Offline</button>
+                            </div>						
+                            <div class="contacts">
+                                <h1>Contacts</h1>
 
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
+                                
+                               
+                                <div class="list-group" id="contacts" role="tablist">
+                                    <a href="#" class="filterMembers all online contact" data-toggle="list">
+                                        <img class="avatar-md" src="{% static 'img/avatars/avatar-female-1.jpg' %}" data-toggle="tooltip" data-placement="top" title="Janette" alt="avatar">
+                                        <div class="status">
+                                            <i class="material-icons online">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <h5>Janette Dalton</h5>
+                                            <p>Sofia, Bulgaria</p>
+                                        </div>
+                                        <div class="person-add">
+                                            <i class="material-icons">person</i>
+                                        </div>
+                                    </a>
+                                </div>
+                               
+                    
+                            </div>
+                        </div>
+                        <!-- End of Contacts -->
+                        <!-- Start of Notifications -->
+                        <div id="notifications" class="tab-pane fade">
+                            <div class="search">
+                                <form class="form-inline position-relative">
+                                    <input type="search" class="form-control" id="notice" placeholder="Filter notifications...">
+                                    <button type="button" class="btn btn-link loop"><i class="material-icons filter-list">filter_list</i></button>
+                                </form>
+                            </div>
+                            <div class="list-group sort">
+                                <button class="btn filterNotificationsBtn active show" data-toggle="list" data-filter="all">All</button>
+                                <button class="btn filterNotificationsBtn" data-toggle="list" data-filter="latest">Latest</button>
+                                <button class="btn filterNotificationsBtn" data-toggle="list" data-filter="oldest">Oldest</button>
+                            </div>						
+                            <div class="notifications">
+                                <h1>Notifications</h1>
+                                <div class="list-group" id="alerts" role="tablist">
+                                    <a href="#" class="filterNotifications all latest notification" data-toggle="list">
+                                        <img class="avatar-md" src="dist/img/avatars/avatar-female-1.jpg" data-toggle="tooltip" data-placement="top" title="Janette" alt="avatar">
+                                        <div class="status">
+                                            <i class="material-icons online">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <p>Janette has accepted your friend request on Swipe.</p>
+                                            <span>Oct 17, 2018</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Notifications -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Sidebar -->
+       
+        <div class="main">
+            <div class="tab-content" id="nav-tabContent">
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat1">
+                        <div class="top">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <a href="#"><img class="avatar-md" src="C:/Users/Dell  PC/Desktop/profile.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar"></a>
+                                        <div class="status">
+                                            <i class="material-icons online">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <h5><a href="#">Keith Morris</a></h5>
+                                            <span>Active now</span>
+                                        </div>
+                                        <button class="btn d-md-block d-none"><i class="material-icons md-30">info</i></button>
+                                        <div class="dropdown">
+                                            <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item connect" name="1"><i class="material-icons">phone_in_talk</i>Voice Call</button>
+                                                <hr>
+                                                <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
+                                                <button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content" id="content">
+                            <div class="container">
+                                <div class="col-md-12">
+    
+                                    <div  id="chat-log">
+                                    <div class="message me">
+                                        <div class="text-main">
+                                            <div class="text-group me">
+                                                <div class="text me">
+                                                    <p>Well done all. See you all at 2 for the kick-off meeting.</p>
+                                                </div>
+                                            </div>
+                                            <span>10:21 PM</span>
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                    <div class="message">
+                                        <img class="avatar-md" src="C:/Users/Dell  PC/Desktop/profile.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+                                        <div class="text-main">
+                                            <div class="text-group">
+                                                <div class="text">
+                                                    <div class="attachment">
+                                                        <button class="btn attach"><i class="material-icons md-18">insert_drive_file</i></button>
+                                                        <div class="file">
+                                                            <h5><a href="#">Tenacy Agreement.pdf</a></h5>
+                                                            <span>24kb Document</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span>11:07 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                    {% comment %}
+                                    <div class="message">
+                                        <img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+                                        <div class="text-main">
+                                            <div class="text-group">
+                                                <div class="text typing">
+                                                    <div class="wave">
+                                                        <span class="dot"></span>
+                                                        <span class="dot"></span>
+                                                        <span class="dot"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endcomment %}
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control" id="chat-message-input" placeholder="Start typing for reply..." rows="1"></textarea>
+                                        <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
+                                        <button type="submit" class="btn send" id="chat-message-submit"><i class="material-icons">send</i></button>
+                                    </form>
+                                    <label>
+                                        <input type="file">
+                                        <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                    </label> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-        };
+                    <script>
+                        var roomName = {{ room_name }};
+                        var username = {{ username }};
+                
+                        const chatSocket = new ReconnectingWebSocket(
+                            'ws://'
+                            + window.location.host
+                            + '/ws/chat/'
+                            + roomName
+                            + '/'
+                        );
+                        
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+                        chatSocket.onopen = function(e) {
+                            fetchMessages();
+                        }
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+                        chatSocket.onmessage = function(e) {
+                            const data = JSON.parse(e.data);
+                            
+                            if (data['command'] === 'messages') {
+                                for (let i=0; i<data['messages'].length; i++) {
+                                    createMessage(data['messages'][i]);
+                                }
+                            } else if (data['command'] === 'new_messages') {
+                                createMessage(data['message']);
+                            }
+                        };
+                      
+                        chatSocket.onclose = function(e) {
+                            console.error('Chat socket closed unexpectedly');
+                        };
+                
+                        document.querySelector('#chat-message-input').focus();
+                        document.querySelector('#chat-message-input').onkeyup = function(e) {
+                            if (e.keyCode === 13) {  // enter, return
+                                document.querySelector('#chat-message-submit').click();
+                            }
+                        };
+                
+                        document.querySelector('#chat-message-submit').onclick = function(e) {
+                            const messageInputDom = document.querySelector('#chat-message-input');
+                            const message = messageInputDom.value;
+                            chatSocket.send(JSON.stringify({
+                                'command':'new_message',
+                                'message': message,
+                                'from': username
+                            }));
+                            messageInputDom.value = '';
+                        };
+                        
+                        function fetchMessages() {
+                            chatSocket.send(JSON.stringify({'command': 'fetch_messages'}))
+                        }
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'command':'new_message'
-            }));
-            messageInputDom.value = '';
-        };
-    </script>
+                        function createMessage(data) {
+                            var author  = data['author'];
+                
+                            var msgDivTag = document.createElement('div');
+                            var msgDivTag_1 = document.createElement('div');
+                            var msgDivTag_2 = document.createElement('div');
+                            var msgDivTag_3 = document.createElement('div');
+                            var timeSpanTag = document.createElement('span');
+                            var pTag = document.createElement('p');
+                            pTag.textContent = data.content;
+                            timeSpanTag.textContent = data.timestamp;
+                            
+                
+                            msgDivTag_1.className='text-main';
+                
+                            if (author === username) {
+                                msgDivTag.className = 'message me';
+                                msgDivTag_2.className = 'text-group me';
+                                msgDivTag_3.className = 'text me';
+                            } else {
+                                msgDivTag.className = 'message';
+                                msgDivTag_2.className = 'text-group';
+                                msgDivTag_3.className = 'text';
+                                var imgTag = document.createElement('img');
+                                imgTag.className = 'avatar-md';
+                                imgTag.src = 'C:/Users/Dell  PC/Desktop/profile.jpg';
+                            }
+                            
+                            msgDivTag.appendChild(imgTag);
+                            msgDivTag.appendChild(msgDivTag_1);
+                            msgDivTag_1.appendChild(msgDivTag_2);
+                            msgDivTag_2.appendChild(msgDivTag_3);
+                            msgDivTag_2.appendChild(timeSpanTag);
+                            msgDivTag_3.appendChild(pTag);
+                            document.querySelector('#chat-log').appendChild(msgDivTag);
+                        }
+                    </script>
+                    <!-- End of Chat -->
+
+                </div>
+                <!-- End of Babble -->
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade" id="list-empty" role="tabpanel" aria-labelledby="list-empty-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat2">
+                        <div class="top">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <a href="#"><img class="avatar-md" src="dist/img/avatars/avatar-female-2.jpg" data-toggle="tooltip" data-placement="top" title="Lean" alt="avatar"></a>
+                                        <div class="status">
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <h5><a href="#">Lean Avent</a></h5>
+                                            <span>Inactive</span>
+                                        </div>
+                                        <button class="btn connect d-md-block d-none" name="2"><i class="material-icons md-30">phone_in_talk</i></button>
+                                        <button class="btn connect d-md-block d-none" name="2"><i class="material-icons md-36">videocam</i></button>
+                                        <button class="btn d-md-block d-none"><i class="material-icons md-30">info</i></button>
+                                        <div class="dropdown">
+                                            <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item connect" name="2"><i class="material-icons">phone_in_talk</i>Voice Call</button>
+                                                <button class="dropdown-item connect" name="2"><i class="material-icons">videocam</i>Video Call</button>
+                                                <hr>
+                                                <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
+                                                <button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content empty">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="no-messages">
+                                        <i class="material-icons md-48">forum</i>
+                                        <p>Seems people are shy to start the chat. Break the ice send the first message.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control" placeholder="Start typing for reply..." rows="1"></textarea>
+                                        <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
+                                        <button type="submit" class="btn send"><i class="material-icons">send</i></button>
+                                    </form>
+                                    <label>
+                                        <input type="file">
+                                        <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                    </label> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Chat -->
+                
+                </div>
+                <!-- End of Babble -->
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade" id="list-request" role="tabpanel" aria-labelledby="list-request-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat3">
+                        <div class="top">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <a href="#"><img class="avatar-md" src="dist/img/avatars/avatar-female-6.jpg" data-toggle="tooltip" data-placement="top" title="Louis" alt="avatar"></a>
+                                        <div class="status">
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <h5><a href="#">Louis Martinez</a></h5>
+                                            <span>Inactive</span>
+                                        </div>
+                                        <button class="btn disabled d-md-block d-none" disabled><i class="material-icons md-30">phone_in_talk</i></button>
+                                        <button class="btn disabled d-md-block d-none" disabled><i class="material-icons md-36">videocam</i></button>
+                                        <button class="btn d-md-block disabled d-none" disabled><i class="material-icons md-30">info</i></button>
+                                        <div class="dropdown">
+                                            <button class="btn disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled><i class="material-icons md-30">more_vert</i></button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item"><i class="material-icons">phone_in_talk</i>Voice Call</button>
+                                                <button class="dropdown-item"><i class="material-icons">videocam</i>Video Call</button>
+                                                <hr>
+                                                <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
+                                                <button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content empty">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="no-messages request">
+                                        <a href="#"><img class="avatar-xl" src="dist/img/avatars/avatar-female-6.jpg" data-toggle="tooltip" data-placement="top" title="Louis" alt="avatar"></a>
+                                        <h5>Louis Martinez would like to add you as a contact. <span>Hi Keith, I'd like to add you as a contact.</span></h5>
+                                        <div class="options">
+                                            <button class="btn button"><i class="material-icons">check</i></button>
+                                            <button class="btn button"><i class="material-icons">close</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control" placeholder="Messaging unavailable" rows="1" disabled></textarea>
+                                        <button class="btn emoticons disabled" disabled><i class="material-icons">insert_emoticon</i></button>
+                                        <button class="btn send disabled" disabled><i class="material-icons">send</i></button>
+                                    </form>
+                                    <label>
+                                        <input type="file" disabled>
+                                        <span class="btn attach disabled d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                    </label> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Chat -->
+                </div>
+                <!-- End of Babble -->
+            </div>
+        </div>
+    </div> <!-- Layout -->
+</main>
+<!-- Bootstrap/Swipe core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'jsc/jquery-3.3.1.slim.min.js' %}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="C:/Users/Dell  PC/Documents/the_barter_app/static_files/jsc/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="{% static 'jsc/vendor/popper.min.js' %}"></script>
+<script src="{% static 'jsc/swipe.min.js' %}"></script>
+<script src="{% static 'jsc/bootstrap.min.js' %}"></script>
+<script>
+    function scrollToBottom(el) { el.scrollTop = el.scrollHeight; }
+    scrollToBottom(document.getElementById('content'));
+</script>
 </body>
 </html>
