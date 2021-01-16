@@ -4,6 +4,8 @@ from base_app.models import Profile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from django.contrib.auth.models import User
+from django.core.files.images import get_image_dimensions
+
 
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=30, label='First Name')
@@ -36,7 +38,7 @@ class ProfileForm(forms.ModelForm):
                     w, h = get_image_dimensions(profile_pic)
 
                     #validate dimensions
-                    max_width = max_height = 100
+                    max_width = max_height = 300
                     if w > max_width or h > max_height:
                         raise forms.ValidationError(
                             u'Please use an image that is '
