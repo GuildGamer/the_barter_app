@@ -139,6 +139,15 @@ def delete_item(request, slug):
         item.delete()
         messages.info(request, "This item was deleted")
         return redirect("base_app:inventory")
+
+@login_required
+def delete_trade_item(request, slug):
+    trade_item = get_object_or_404(TradeItem, slug=slug)
+    
+    if trade_item.user == request.user:   
+        trade_item.delete()
+        messages.info(request, "This item was deleted")
+        return redirect("base_app:inventory")
    
 #for a 100 contributions in 2020!
 ##################################################################################################################################

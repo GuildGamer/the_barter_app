@@ -11,6 +11,7 @@ from .views import (
     ItemDetailView,
     profileView,
     delete_item,
+    delete_trade_item,
 )
 
 app_name = 'base_app'
@@ -25,6 +26,7 @@ urlpatterns = [
      path('item-details/<slug>', ItemDetailView, name='item-details'),
      path('new-item/', new_item, name='new-item'),
      path('delete-item/<slug>/',delete_item, name='delete-item'),
+    path('delete-trade-item/<slug>/',delete_trade_item, name='delete-trade-item'),
      # url(r'^Profile/(?P<slug>[-\w]+)/$', ProfileDetail, name='ProfileDetail'),
      # url(r'^Profile/(?P<slug>[-\w]+)/edit/$', EditProfile, name='EditProfile'),
 ]
