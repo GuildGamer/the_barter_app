@@ -54,6 +54,7 @@ class TradeItem(models.Model):
     response_date = models.DateTimeField(blank=True, null=True)
     responded = models.BooleanField(default=False)
 
+
     def __str__(self):
         return self.item.title
 

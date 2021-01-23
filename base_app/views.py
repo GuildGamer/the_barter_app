@@ -60,20 +60,29 @@ def ItemDetailView(request, slug):
         if requests_form.is_valid():
 
             if item.user != request.user:
-
-                requests = requests_form.save(commit=False)
-                requests.user = item.user
-                requests.suitor = request.user
-                requests.item = item
-                requests.save()
-
-                trade_item, created= TradeItem.objects.get_or_create(
+                trade_item = TradeItem.objects.filter(
                 item=item,
                 user = request.user,
                 responded = False
-                )
+                 )
 
-                messages.info(request, "Your request has been sent")
+                if trade_item.exists():
+                      messages.info(request, "You have already sent a request")
+                else:
+
+                    requests = requests_form.save(commit=False)
+                    requests.user = item.user
+                    requests.suitor = request.user
+                    requests.item = item
+                    requests.save()
+
+                    trade_item, created= TradeItem.objects.get_or_create(
+                    item=item,
+                    user = request.user,
+                    responded = False
+                    )
+
+                    messages.info(request, "Your request has been sent")
             else:
 
                   messages.info(request, "Your cannot request this item since you own it")
