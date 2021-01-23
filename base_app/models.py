@@ -100,7 +100,8 @@ class Profile(models.Model):
     address = models.CharField(max_length=200, blank=True)
     city = models.CharField(blank=True, max_length=100)
     state = models.CharField(blank=True, max_length=100)
-    
+    profile_pic = models.ImageField(upload_to='profile_pics', default='profile_pics/default.png')
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
