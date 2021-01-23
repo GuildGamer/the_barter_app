@@ -27,7 +27,7 @@ class Item(models.Model):
     title = models.CharField(max_length=100)
     estimated_value = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     description = models.TextField(max_length=400)
     condition = models.CharField(choices=CONDITION_CHOICES, max_length=1)
     image = models.ImageField()
@@ -47,15 +47,35 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse('base_app:item-details', kwargs={'slug': self.slug})
 class TradeItem(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='suitor', on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
+    quantity = models.IntegerField(default=1) 
     request_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     response_date = models.DateTimeField(blank=True, null=True)
-    accepted = models.BooleanField(default=False, blank=True, null=True)
-
+    responded = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return self.item.title
+
+
+'''class Requests(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    items = models.ManyToManyField(TradeItem)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username'''
+
+class RequestsToMe(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='item_owner', on_delete=models.CASCADE)
+    suitor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='request_maker', on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, blank=True, null=True)
+    quantity = models.IntegerField(default=1, blank=True, null=True) 
+
+    def __str__(self):
+        return self.suitor.username
+
+  
 
 class Inventory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

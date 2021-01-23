@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Item
+from .models import Item, TradeItem, RequestsToMe
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -30,24 +30,61 @@ context = {
 def item_list(request):
     return render(request, "index.html", context)
 
-class ItemDetailView(DetailView):
-    model = Item
-    template_name = "product.html"
-
 class ShopGridView(ListView):
     model = Item
     template_name = "shop-grid.html"
 
-    
+@login_required
+def InventoryView(request):
 
-class InventoryView(ListView):
-    model = Item
-    template_name = "inventory.html"
+    context = {
+        'items':Item.objects.filter(user=request.user),
+        'trade_items':TradeItem.objects.filter(user=request.user),
+    }   
+
+    return render(request, 'inventory.html', context)
 
 class ContactView(TemplateView):
     template_name = "contact.html"
 
+
 #FUNCTION BASED VIEWS
+@login_required
+def ItemDetailView(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+
+    requests_form = RequestsForm(request.POST)
+
+    if request.method == 'POST':
+    
+        if requests_form.is_valid():
+
+            if item.user != request.user:
+
+                requests = requests_form.save(commit=False)
+                requests.user = item.user
+                requests.suitor = request.user
+                requests.item = item
+                requests.save()
+
+                trade_item, created= TradeItem.objects.get_or_create(
+                item=item,
+                user = request.user,
+                responded = False
+                )
+
+                messages.info(request, "Your request has been sent")
+            else:
+
+                  messages.info(request, "Your cannot request this item since you own it")
+    context = {
+            'requests_form': requests_form,
+            'item' : item
+    }
+
+        
+
+    return render(request, "product.html", context)
 
 def searchResult(request):
     product = None

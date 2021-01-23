@@ -3,13 +3,13 @@
 
 {% block content %} 
 				
-	<!-- Shopping Cart -->
+	<!-- Items -->
 	<div class="shopping-cart section">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<!-- Shopping Summery -->
-					{% if object_list %}
+					
+					{% if items %}
 					<table class="table shopping-summery">
 						<thead>
 							<tr class="main-hading">
@@ -20,14 +20,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for item in object_list %}
+							{% for item in items %}
 							{% if item.user.id == user.id %}
 							<tr>
 								<td class="image" data-title="Item"><img src="{{ item.image.url }}" alt="#"></td>
 								<td class="product-des" data-title="Name">
 									<p class="product-name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></p>
 								</td>
-								<td class="qty" data-title="Qty"><!-- Input Order -->
+								<td class="qty" data-title="Qty">
 									<div class="input-group">
 										<div class="button minus">
 											<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
@@ -41,7 +41,7 @@
 											</button>
 										</div>
 									</div>
-									<!--/ End Input Order -->
+									
 								</td>
 								<td class="action" data-title="Remove"><a href="{% url 'base_app:delete-item' item.slug %}"><i class="ti-trash remove-icon"></i></a></td>
 							</tr>
@@ -75,11 +75,43 @@
 					<!--/ End Shopping Summery -->
 				</div>
 			</div>	
-			
-	<!-- Modal -->
+
+				
+		
 	</div>
 </div>
 
-        <!-- Modal end -->
+{% if trade_items %}
+<div class="shopping-cart section">
+<div class="container">
+<table class="table shopping-summery">
+	<thead>
+		<tr class="main-hading">
+			<th>REQUESTS</th>
+			<th>NAME</th>
+			<th class="text-center">QUANTITY</th> 
+			<th class="text-center"><i class="ti-trash remove-icon"></i></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for trade_item in trade_items %}
+		{% if trade_item.user.id == user.id %}
+		<tr>
+			<td class="image" data-title="Requested Item"><img src="{{ trade_item.item.image.url }}" alt="#"></td>
+			<td class="product-des" data-title="Name">
+				<p class="product-name"><a href="{{ trade_item.item.get_absolute_url }}">{{ trade_item.item.title }} from {{ trade_item.item.user}} </a></p>
+			</td>
+			<td class="qty" data-title="Qty">
+				<p>{{ trade_item.quantity }}</p>
+			</td>
+			<td class="action" data-title="Remove"><a href="{% url 'base_app:delete-item' trade_item.item.slug %}"><i class="ti-trash remove-icon"></i></a></td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+</div>
+{% endif %}
 	
 {% endblock content %} 
