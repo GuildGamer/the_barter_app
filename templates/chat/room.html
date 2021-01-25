@@ -222,7 +222,7 @@
                     </div>
 
                     <script>
-                        var roomName = {{ room_name }};
+                        var roomName = {{ room_name_json }};
                         var username = {{ username }};
                 
                         const chatSocket = new ReconnectingWebSocket(
@@ -239,13 +239,13 @@
                         }
 
                         chatSocket.onmessage = function(e) {
-                            const data = JSON.parse(e.data);
+                            var data = JSON.parse(e.data);
                             
                             if (data['command'] === 'messages') {
                                 for (let i=0; i<data['messages'].length; i++) {
                                     createMessage(data['messages'][i]);
                                 }
-                            } else if (data['command'] === 'new_messages') {
+                            } else if (data['command'] === 'new_message') {
                                 createMessage(data['message']);
                             }
                         };
@@ -273,7 +273,7 @@
                         };
                         
                         function fetchMessages() {
-                            chatSocket.send(JSON.stringify({'command': 'fetch_messages'}))
+                            chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
                         }
 
                         function createMessage(data) {
@@ -304,7 +304,7 @@
                                 imgTag.src = 'C:/Users/Dell  PC/Desktop/profile.jpg';
                             }
                             
-                            msgDivTag.appendChild(imgTag);
+                            if (author != username) {msgDivTag.appendChild(imgTag);}
                             msgDivTag.appendChild(msgDivTag_1);
                             msgDivTag_1.appendChild(msgDivTag_2);
                             msgDivTag_2.appendChild(msgDivTag_3);
