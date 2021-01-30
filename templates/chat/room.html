@@ -153,53 +153,7 @@
                             <div class="container">
                                 <div class="col-md-12">
     
-                                    <div  id="chat-log">
-                                    <div class="message me">
-                                        <div class="text-main">
-                                            <div class="text-group me">
-                                                <div class="text me">
-                                                    <p>Well done all. See you all at 2 for the kick-off meeting.</p>
-                                                </div>
-                                            </div>
-                                            <span>10:21 PM</span>
-                                        </div>
-                                    </div>
-                                   
-                                   
-                                    <div class="message">
-                                        <img class="avatar-md" src="C:/Users/Dell  PC/Desktop/profile.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
-                                        <div class="text-main">
-                                            <div class="text-group">
-                                                <div class="text">
-                                                    <div class="attachment">
-                                                        <button class="btn attach"><i class="material-icons md-18">insert_drive_file</i></button>
-                                                        <div class="file">
-                                                            <h5><a href="#">Tenacy Agreement.pdf</a></h5>
-                                                            <span>24kb Document</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span>11:07 PM</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                    {% comment %}
-                                    <div class="message">
-                                        <img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
-                                        <div class="text-main">
-                                            <div class="text-group">
-                                                <div class="text typing">
-                                                    <div class="wave">
-                                                        <span class="dot"></span>
-                                                        <span class="dot"></span>
-                                                        <span class="dot"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endcomment %}
+                                    <div  id="chat-log"></div>
                                   
                                 </div>
                             </div>
@@ -236,7 +190,7 @@
 
                         chatSocket.onopen = function(e) {
                             fetchMessages();
-                        }
+                        };
 
                         chatSocket.onmessage = function(e) {
                             var data = JSON.parse(e.data);
@@ -286,7 +240,7 @@
                             var timeSpanTag = document.createElement('span');
                             var pTag = document.createElement('p');
                             pTag.textContent = data.content;
-                            timeSpanTag.textContent = data.timestamp;
+                            timeSpanTag.textContent = data.time;
                             
                 
                             msgDivTag_1.className='text-main';
