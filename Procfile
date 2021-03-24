@@ -1,0 +1,1 @@
+web: gunicorn the_barter_app.wsgi --log-file -
